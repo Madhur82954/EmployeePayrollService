@@ -6,8 +6,7 @@ namespace EmployeePayrollService
     {
         static void Main(string[] args)
         {
-            //Payroll.createdatabase();
-            Payroll.createtable();
+            
         }
     }
 }
