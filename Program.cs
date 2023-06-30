@@ -8,7 +8,8 @@ namespace EmployeePayrollService
         {
             //Payroll.createdatabase();
             //Payroll.createtable();
-            Payroll.insert();
+            //Payroll.insert();
+            Payroll.retrievedata();
         }
     }
 }
