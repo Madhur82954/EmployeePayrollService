@@ -29,7 +29,7 @@ namespace EmployeePayrollService
             try
             {
                 con.Open();
-                string query = "create table employee_payroll(Columns_Id int identity(1,1) Primary key,Name varchar(20),Salary int,Gender varchar(20),Phone varchar(50),Address varchar (100),Department varchar(20),Deduction int,Taxable_Pay int,Income_Tax int,Net_Pay int);";
+                string query = "create table employee_payroll(Columns_Id int identity(1,1) Primary key,Name varchar(20),Salary int,StartDate date,Gender varchar(20),Phone varchar(50),Address varchar (100),Department varchar(20),Deduction int,Taxable_Pay int,Income_Tax int,Net_Pay int);";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("table created Succesfully");
@@ -94,10 +94,10 @@ namespace EmployeePayrollService
                     {
                         int columnsId = reader.GetInt32(0);
                         string name = reader.GetString(1);
-                        string salary = reader.GetString(2);
+                        int salary = reader.GetInt32(2);
                         DateTime startDate = reader.GetDateTime(3);
                         string gender = reader.GetString(4);
-                        int phone = reader.GetInt32(5);
+                        string phone = reader.GetString(5);
                         string address = reader.GetString(6);
                         string department = reader.GetString(7);
                         int deduction = reader.GetInt32(8);
@@ -111,6 +111,36 @@ namespace EmployeePayrollService
                 else
                 {
                     Console.WriteLine("No records found in the employeePayroll table.");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        public static void RetrieveSalaryData(string employeeName)
+        {
+            try
+            {
+                con.Open();
+                string query = $"select Salary FROM employee_payroll WHERE Name = '{employeeName}'";
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    Console.WriteLine($"Salary data for employee '{employeeName}':");
+                    while (reader.Read())
+                    {
+                        int salary = reader.GetInt32(0);
+                        Console.WriteLine($"Salary: {salary}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"No salary data found for employee '{employeeName}'.");
                 }
 
                 reader.Close();

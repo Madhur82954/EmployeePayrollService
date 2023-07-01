@@ -9,7 +9,8 @@ namespace EmployeePayrollService
             //Payroll.createdatabase();
             //Payroll.createtable();
             //Payroll.insert();
-            Payroll.retrievedata();
+            //Payroll.retrievedata();
+            Payroll.RetrieveSalaryData("MadhurVerma");
         }
     }
 }
