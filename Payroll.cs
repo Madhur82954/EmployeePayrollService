@@ -195,5 +195,21 @@ namespace EmployeePayrollService
                 Console.WriteLine("Error message is :"+e.Message);
             }
         }
+        public static void AddGender()
+        {
+            try
+            {
+                con.Open();
+                string query = "alter table employee_payroll add Gender varchar(10)";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Gender is inserted in the table.");
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error message is : "+e.Message);
+            }
+        }
     }
 }
