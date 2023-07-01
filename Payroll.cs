@@ -126,7 +126,7 @@ namespace EmployeePayrollService
             try
             {
                 con.Open();
-                string query = $"select Salary FROM employee_payroll WHERE Name = '{employeeName}'";
+                string query = $"select Salary from employee_payroll where Name = '{employeeName}'";
                 SqlCommand cmd = new SqlCommand(query, con);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.HasRows)
@@ -149,6 +149,50 @@ namespace EmployeePayrollService
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+        public static void RetrieveEmployeesByDateRange(DateTime StartDate, DateTime EndDate)
+        {
+            try
+            {
+                con.Open();
+                string query = $"select * from employee_payroll where StartDate between '{StartDate.ToString("yyyy-MM-dd")}' AND '{EndDate.ToString("yyyy-MM-dd")}'";
+                SqlCommand cmd = new SqlCommand(query, con);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    Console.WriteLine($"Employees who have joined between {StartDate.ToShortDateString()} and {EndDate.ToShortDateString()}:");
+
+                    while (reader.Read())
+                    {
+                        int columnsId = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        int salary = reader.GetInt32(2);
+                        DateTime empStartDate = reader.GetDateTime(3);
+                        string gender = reader.GetString(4);
+                        string phone = reader.GetString(5);
+                        string address = reader.GetString(6);
+                        string department = reader.GetString(7);
+                        int deduction = reader.GetInt32(8);
+                        int taxablePay = reader.GetInt32(9);
+                        int incomeTax = reader.GetInt32(10);
+                        int netPay = reader.GetInt32(11);
+
+                        Console.WriteLine($"{columnsId}\t\t{name}\t{salary}\t{empStartDate.ToShortDateString()}\t{gender}\t{phone}\t{address}\t{department}\t{deduction}\t{taxablePay}\t{incomeTax}\t{netPay}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("there are no employees present in this range");
+                }
+
+                reader.Close();
+                con.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error message is :"+e.Message);
             }
         }
     }

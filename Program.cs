@@ -10,7 +10,10 @@ namespace EmployeePayrollService
             //Payroll.createtable();
             //Payroll.insert();
             //Payroll.retrievedata();
-            Payroll.RetrieveSalaryData("MadhurVerma");
+            //Payroll.RetrieveSalaryData("MadhurVerma");
+            DateTime StartDate = new DateTime(2020,2,2);
+            DateTime EndDate = DateTime.Now;
+            Payroll.RetrieveEmployeesByDateRange(StartDate,EndDate);
         }
     }
 }
